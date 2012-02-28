@@ -1,0 +1,34 @@
+## Vold 2.0 Generic fstab
+## - San Mehat (san@android.com)
+## 
+
+#######################
+## Regular device mount
+##
+## Format: dev_mount <label> <mount_point[:[asec_point]:[lun_point]]> <part> <sysfs_path1...> 
+## label        - Label for the volume
+## mount_point  - Where the volume will be mounted
+## asec_point   - Whether asec mount is needed for this value, if not, use "none"
+##                  Else, supply a folder name under /mnt/secure/
+##                  If not supplied, "asec" will used by default
+##                  If supplied, /mnt/secure/asec_point will be used
+##                    This is for further extension, not needed now
+## lun_point    - The target lun device for this volume. If not supplied, will use
+##                  /sys/devices/platform/usb_mass_storage/lun0/file
+##                  else, will use /sys/devices/platform/usb_mass_storage/lun_point/file
+## part         - Partition # (1 based), or 'auto' for first usable partition.
+##                  For a disk with only 1 partition, use '1' is different to 'auto'
+##                  Using 1, will not re-write its partition table when formatting
+## <sysfs_path> - List of sysfs paths to source devices
+######################
+
+## Example of a standard sdcard mount for the emulator / Dream
+# Mounts the first usable partition of the specified device
+dev_mount sdcard /mnt/sdcard 22 /devices/platform/goldfish_mmc.0 /devices/platform/mmci-omap-hs.1/mmc_host/mmc1
+
+## Example of a dual card setup
+# dev_mount left_sdcard  /sdcard1  auto /devices/platform/goldfish_mmc.0 /devices/platform/msm_sdcc.2/mmc_host/mmc1
+# dev_mount right_sdcard /sdcard2  auto /devices/platform/goldfish_mmc.1 /devices/platform/msm_sdcc.3/mmc_host/mmc1
+
+## Example of specifying a specific partition for mounts
+# dev_mount sdcard /sdcard 2 /devices/platform/goldfish_mmc.0 /devices/platform/msm_sdcc.2/mmc_host/mmc1

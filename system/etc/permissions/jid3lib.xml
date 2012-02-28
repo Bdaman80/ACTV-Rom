@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <library name="jid3lib"
+           file="/system/framework/jid3lib.jar"/>
+</permissions>
